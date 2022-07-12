@@ -1,8 +1,9 @@
-# This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
 version: 2.1
+
+jobs:
   build:
     docker:
-      - image: circleci/node@4.7
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run: npm i
@@ -13,7 +14,7 @@ version: 2.1
       - run: npm run lint
   test:
     docker:
-      - image: circleci/node@4.7
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -23,13 +24,13 @@ version: 2.1
       - run: npm run test
   analyze:
     docker:
-          - image: circleci/node@4.7
-        steps:
-          - checkout
-          - restore_cache:
-              keys:
-                - "npm-packages"
-          - run: npm audit
+          - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - "npm-packages"
+      - run: npm audit
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
